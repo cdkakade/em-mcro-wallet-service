@@ -3,8 +3,8 @@ spring:
     name: @project.name@
   liquibase:
     change-log: classpath:db/changelog.xml
-  profiles:
-    active: local
+  #profiles:
+    #active: local
   jpa:
     hibernate:
       ddl-auto: validate
