@@ -8,6 +8,7 @@ import expense.manager.wallet.entity.WalletEntity;
 import expense.manager.wallet.repository.WalletRepository;
 import expense.manager.wallet.service.WalletService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,9 @@ public class WalletServiceImpl implements WalletService {
 
 	@Override
 	public List<WalletResponse> findAll() {
-		return null;
+		List<WalletEntity> walletEntities = repository.findAll();
+		return new ModelMapper().map(walletEntities, new TypeToken<List<WalletResponse>>() {
+		}.getType());
 	}
 
 	@Override
@@ -39,9 +42,8 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public WalletResponse save(String correlationId, WalletRequest wallet) {
-		ResponseEntity<CurrencyResponse> currencyResponse = currencyClient.findById(correlationId,
-				wallet.getCurrencyId());
+	public WalletResponse save(WalletRequest wallet) {
+		ResponseEntity<CurrencyResponse> currencyResponse = currencyClient.findById(wallet.getCurrencyId());
 		if (currencyResponse.getStatusCode().is2xxSuccessful() && Objects.nonNull(currencyResponse.getBody())) {
 			WalletEntity entityToSave = new ModelMapper().map(wallet, WalletEntity.class);
 			entityToSave.setCurrencyId(currencyResponse.getBody().getId());

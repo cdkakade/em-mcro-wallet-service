@@ -11,6 +11,6 @@ public interface WalletService {
 
 	WalletResponse findById(String id);
 
-	WalletResponse save(String correlationId, WalletRequest wallet);
+	WalletResponse save(WalletRequest wallet);
 
 }
