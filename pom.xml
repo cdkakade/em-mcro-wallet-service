@@ -4,13 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>expense.manager</groupId>
-		<artifactId>mcro-starter-parent</artifactId>
+		<artifactId>starter-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<artifactId>mcro-wallet-service</artifactId>
+	<artifactId>wallet-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mcro-wallet-service</name>
+	<name>wallet-service</name>
 	<description>Wallet Service</description>
 
 </project>
