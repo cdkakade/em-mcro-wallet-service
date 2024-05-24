@@ -53,3 +53,9 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8070/eureka/}
     registerWithEureka: true
     fetchRegistry: true
+
+logging:
+  level:
+    org:
+      zalando:
+        logbook: TRACE
