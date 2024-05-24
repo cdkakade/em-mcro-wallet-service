@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface WalletService {
 
-    List<WalletResponse> findAll();
+	List<WalletResponse> findAll();
 
-    WalletResponse findById(String id);
+	WalletResponse findById(String id);
 
-    WalletResponse save(WalletRequest wallet);
+	WalletResponse save(String correlationId, WalletRequest wallet);
+
 }

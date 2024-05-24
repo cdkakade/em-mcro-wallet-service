@@ -39,8 +39,9 @@ public class WalletServiceImpl implements WalletService {
 	}
 
 	@Override
-	public WalletResponse save(WalletRequest wallet) {
-		ResponseEntity<CurrencyResponse> currencyResponse = currencyClient.findById(wallet.getCurrencyId());
+	public WalletResponse save(String correlationId, WalletRequest wallet) {
+		ResponseEntity<CurrencyResponse> currencyResponse = currencyClient.findById(correlationId,
+				wallet.getCurrencyId());
 		if (currencyResponse.getStatusCode().is2xxSuccessful() && Objects.nonNull(currencyResponse.getBody())) {
 			WalletEntity entityToSave = new ModelMapper().map(wallet, WalletEntity.class);
 			entityToSave.setCurrencyId(currencyResponse.getBody().getId());
