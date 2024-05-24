@@ -7,6 +7,7 @@ import expense.manager.wallet.client.CurrencyClient;
 import expense.manager.wallet.entity.WalletEntity;
 import expense.manager.wallet.repository.WalletRepository;
 import expense.manager.wallet.service.WalletService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class WalletServiceImpl implements WalletService {
 
 	@Autowired
@@ -45,11 +47,13 @@ public class WalletServiceImpl implements WalletService {
 	public WalletResponse save(WalletRequest wallet) {
 		ResponseEntity<CurrencyResponse> currencyResponse = currencyClient.findById(wallet.getCurrencyId());
 		if (currencyResponse.getStatusCode().is2xxSuccessful() && Objects.nonNull(currencyResponse.getBody())) {
+			log.info("Currency id {} is valid",wallet.getCurrencyId());
 			WalletEntity entityToSave = new ModelMapper().map(wallet, WalletEntity.class);
 			entityToSave.setCurrencyId(currencyResponse.getBody().getId());
 			entityToSave = repository.save(entityToSave);
 			return new ModelMapper().map(entityToSave, WalletResponse.class);
-		}
+		}else
+			log.info("Currency id {} is invalid, throwing BAD request",wallet.getCurrencyId());
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Currency Id");
 	}
 

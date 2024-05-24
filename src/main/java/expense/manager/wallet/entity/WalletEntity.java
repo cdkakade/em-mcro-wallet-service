@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -14,6 +16,7 @@ import java.math.BigDecimal;
 @Entity(name = "wallet")
 public class WalletEntity extends BaseEntity implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -3334574155955632843L;
 
 	@Column(nullable = false)
