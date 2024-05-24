@@ -9,6 +9,6 @@
     </parent>
     <artifactId>wallet-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Wallet</name>
+    <name>wallet-service</name>
     <description>Expense Manager Wallet Project</description>
 </project>

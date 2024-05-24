@@ -46,6 +46,10 @@ endpoints:
   shutdown:
     enabled: true
 eureka:
+  instance:
+    preferIpAddress: true
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    serviceUrl:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8085/eureka/}
+    registerWithEureka: true
+    fetchRegistry: true
