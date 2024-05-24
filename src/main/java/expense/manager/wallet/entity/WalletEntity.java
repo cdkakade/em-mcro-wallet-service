@@ -2,6 +2,7 @@ package expense.manager.wallet.entity;
 
 import expense.manager.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @Entity(name = "wallet")
 public class WalletEntity extends BaseEntity implements Serializable {
 

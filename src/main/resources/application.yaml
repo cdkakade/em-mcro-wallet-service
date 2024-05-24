@@ -6,3 +6,10 @@ spring:
     change-log: classpath:db/changelog.xml
   profiles:
     active: local
+
+server:
+  error:
+    include-message: ALWAYS
+    include-binding-errors: ALWAYS
+    include-stacktrace: NEVER
+    include-exception: false
