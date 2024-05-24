@@ -17,7 +17,10 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="balance" type="DECIMAL"/>
+            <column name="currency_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="CURRENCY"/>
             <column name="created_at" type="TIMESTAMP"/>
             <column name="modified_at" type="TIMESTAMP"/>
             <column name="version" type="INT"/>

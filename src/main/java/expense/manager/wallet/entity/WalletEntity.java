@@ -10,14 +10,18 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper = false)
 @Entity(name = "wallet")
 public class WalletEntity extends BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -3334574155955632843L;
+	private static final long serialVersionUID = -3334574155955632843L;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    private BigDecimal balance;
+	private BigDecimal balance;
+
+	@Column(name = "currency_id")
+	private Long currencyId;
+
 }

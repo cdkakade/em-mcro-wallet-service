@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -34,7 +34,7 @@ public class WalletController {
 
     @Operation(summary = "Get Wallet By ID", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<WalletResponse> findById(Principal principal, @PathVariable(value = "id") String walletId)
+    public ResponseEntity<WalletResponse> findById(@PathVariable(value = "id") String walletId)
             throws Exception {
         WalletResponse returnValue = service.findById(walletId);
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
@@ -42,10 +42,10 @@ public class WalletController {
 
     @Operation(summary = "Add New Wallet")
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<WalletResponse> addWallet(@Valid @RequestBody WalletRequest wallet
+    @ResponseStatus(HttpStatus.CREATED)
+    public WalletResponse addWallet(@Valid @RequestBody WalletRequest wallet
     ) throws Exception {
-        WalletResponse returnValue = service.save(wallet);
-        return new ResponseEntity<>(returnValue, HttpStatus.CREATED);
+        return service.save(wallet);
     }
 
     /*@Operation(summary = "Update Wallet By Id", security = @SecurityRequirement(name = "bearerAuth"))
