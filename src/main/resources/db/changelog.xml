@@ -23,7 +23,7 @@
             <column name="balance" type="CURRENCY"/>
             <column name="created_at" type="TIMESTAMP"/>
             <column name="modified_at" type="TIMESTAMP"/>
-            <column name="version" type="INT"/>
+            <column name="version" type="BIGINT"/>
         </createTable>
 
     </changeSet>
