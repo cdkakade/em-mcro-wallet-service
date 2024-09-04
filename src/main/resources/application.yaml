@@ -54,8 +54,8 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
 
-logging:
-  level:
-    org:
-      zalando:
-        logbook: TRACE
+#logging:
+#  level:
+#    org:
+#      zalando:
+#        logbook: TRACE
