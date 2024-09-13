@@ -16,15 +16,18 @@ import java.math.BigDecimal;
 @Entity(name = "wallet")
 public class WalletEntity extends BaseEntity implements Serializable {
 
-	@Serial
-	private static final long serialVersionUID = -3334574155955632843L;
+    @Serial
+    private static final long serialVersionUID = -3334574155955632843L;
 
-	@Column(nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-	private BigDecimal balance;
+    private BigDecimal balance;
 
-	@Column(name = "currency_id")
-	private Long currencyId;
+    @Column(name = "currency_id")
+    private Long currencyId;
+
+    @Column(name = "user_id")
+    private String userId;
 
 }

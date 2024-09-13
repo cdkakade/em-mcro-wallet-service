@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(value = "currency-service", dismiss404 = true)
+@FeignClient(value = "currency-service", dismiss404 = true, url = "http://localhost:8072/")
 public interface CurrencyClient {
 
-	@RequestMapping(method = RequestMethod.GET, value = "currencies", consumes = "application/json")
-	List<CurrencyResponse> findAll();
+    @RequestMapping(method = RequestMethod.GET, value = "currencies", consumes = "application/json")
+    List<CurrencyResponse> findAll();
 
-	@RequestMapping(method = RequestMethod.GET, value = "currencies/{id}", consumes = "application/json")
-	ResponseEntity<CurrencyResponse> findById(@PathVariable("id") Long id);
+    @RequestMapping(method = RequestMethod.GET, value = "currencies/{id}", consumes = "application/json")
+    ResponseEntity<CurrencyResponse> findById(@PathVariable("id") Long id);
 
 }

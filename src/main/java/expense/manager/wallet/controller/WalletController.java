@@ -4,20 +4,16 @@ import expense.manager.common.dto.wallet.request.WalletRequest;
 import expense.manager.common.dto.wallet.response.WalletResponse;
 import expense.manager.wallet.service.WalletService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -25,55 +21,55 @@ import java.util.List;
 @Slf4j
 public class WalletController {
 
-	@Autowired
-	private WalletService service;
+    @Autowired
+    private WalletService service;
 
-	@Operation(summary = "Get All Wallets", security = @SecurityRequirement(name = "bearerAuth"))
-	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	public List<WalletResponse> findAll() {
-		log.info("/wallets GET API called");
-		return service.findAll();
-	}
+    @Operation(summary = "Get All Wallets")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<WalletResponse> findAll() {
+        log.info("/wallets GET API called");
+        return service.findAll();
+    }
 
-	@Operation(summary = "Get Wallet By ID", security = @SecurityRequirement(name = "bearerAuth"))
-	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<WalletResponse> findById(@PathVariable(value = "id") String walletId) throws Exception {
-		log.info("/wallets/{} API called",walletId);
-		WalletResponse returnValue = service.findById(walletId);
-		return new ResponseEntity<>(returnValue, HttpStatus.OK);
-	}
+    @Operation(summary = "Get Wallet By ID")
+    @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<WalletResponse> findById(@PathVariable(value = "id") String walletId, @AuthenticationPrincipal Jwt jwt) throws Exception {
+        log.info("/wallets/{} API called", walletId);
+        WalletResponse returnValue = service.findById(walletId, jwt);
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
+    }
 
-	@Operation(summary = "Add New Wallet")
-	@PostMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	@ResponseStatus(HttpStatus.CREATED)
-	public WalletResponse addWallet(@Valid @RequestBody WalletRequest wallet) throws Exception {
-		log.info("/wallets POST API called");
-		return service.save(wallet);
-	}
+    @Operation(summary = "Add New Wallet")
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public WalletResponse addWallet(@Valid @RequestBody WalletRequest wallet, @AuthenticationPrincipal Jwt jwt) throws Exception {
+        log.info("/wallets POST API called");
+        return service.addWallet(wallet, jwt);
+    }
 
-	/*
-	 * @Operation(summary = "Update Wallet By Id", security = @SecurityRequirement(name =
-	 * "bearerAuth"))
-	 *
-	 * @PutMapping(path = "/{walletId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	 * public ResponseEntity<WalletResponse> updateWallet(Principal
-	 * principal, @Valid @RequestBody WalletRequest wallet,
-	 *
-	 * @PathVariable(name = "walletId") String walletId ) throws Exception {
-	 * WalletResponse returnValue = service.update(principal.getName(), wallet, walletId);
-	 * return new ResponseEntity<>(returnValue, HttpStatus.OK); }
-	 *
-	 * @Operation(summary = "Delete Wallet By Id", security = @SecurityRequirement(name =
-	 * "bearerAuth"))
-	 *
-	 * @DeleteMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	 * public ResponseEntity<OperationStatusDto> deleteWallet(Principal
-	 * principal, @PathVariable String id) throws Exception { OperationStatusDto
-	 * returnValue = new OperationStatusDto();
-	 * returnValue.setOperationName(RequestOperationName.DELETE.name());
-	 * service.delete(principal.getName(), id);
-	 * returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name()); return
-	 * ResponseEntity.status(HttpStatus.OK).body(returnValue); }
-	 */
+    /*
+     * @Operation(summary = "Update Wallet By Id", security = @SecurityRequirement(name =
+     * "bearerAuth"))
+     *
+     * @PutMapping(path = "/{walletId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+     * public ResponseEntity<WalletResponse> updateWallet(Principal
+     * principal, @Valid @RequestBody WalletRequest wallet,
+     *
+     * @PathVariable(name = "walletId") String walletId ) throws Exception {
+     * WalletResponse returnValue = service.update(principal.getName(), wallet, walletId);
+     * return new ResponseEntity<>(returnValue, HttpStatus.OK); }
+     *
+     * @Operation(summary = "Delete Wallet By Id", security = @SecurityRequirement(name =
+     * "bearerAuth"))
+     *
+     * @DeleteMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+     * public ResponseEntity<OperationStatusDto> deleteWallet(Principal
+     * principal, @PathVariable String id) throws Exception { OperationStatusDto
+     * returnValue = new OperationStatusDto();
+     * returnValue.setOperationName(RequestOperationName.DELETE.name());
+     * service.delete(principal.getName(), id);
+     * returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name()); return
+     * ResponseEntity.status(HttpStatus.OK).body(returnValue); }
+     */
 
 }
