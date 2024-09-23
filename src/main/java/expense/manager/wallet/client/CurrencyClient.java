@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(value = "currency-service", dismiss404 = true, url = "http://localhost:8072/")
+@FeignClient(value = "currency-service", dismiss404 = true)
 public interface CurrencyClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "currencies", consumes = "application/json")
